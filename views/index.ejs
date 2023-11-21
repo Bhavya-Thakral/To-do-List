@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>TO-DO list</title>
+</head>
+<body>
+    <script src="index.js"></script>
+    <div class="container">
+        <div class="todo-app">
+            <h1>TO-DO of <%= date %><img src="images/img1.svg"></h1>
+            
+                <div class="row">
+                    <form action="/" method="post">
+                        <input id="text-box" type="text" name="newitems" autofocus="true"  autocomplete="off" placeholder="Add new TO-DO"/>
+                        <button id="submit-btn" type="submit">Add</button>
+                    </form>
+                </div>
+              <div id="item">  
+                <%for (let item of newItem){%>
+                    <div id="list-container">
+                        <form action="/delete" method="post">
+                            <input type="checkbox" onchange="this.form.submit()" name="deleteItemId" value="<%= item.id %>">
+                        </form>
+                    
+                     
+                     <p id="title<%= item.id %>">
+                        <%= item.title %>
+                    </p>
+
+                    <form action="/edit" class="edit" method="post">
+                        <input type="hidden" name="updateItemId" value="<%= item.id %>" >
+                        <input type="text" name="updateItemTitle" id="input<%= item.id %>" value="<%= item.title %>" autocomplete="off" autofocus="true" hidden="true" />
+                        <button id="done<%= item.id %>" class="edit" type="submit" hidden><img src="/images/check-solid.svg" alt="tick image" class="icon"></button>
+                    </form>
+                    <button id="edit<%= item.id %>" class="edit" onclick="handler('<%= item.id %>')"><img src="/images/pencil-solid.svg" alt="pencil image" class="icon"></button>
+                    
+                    </div>
+                <%}%>
+                
+        </div>
+        </div>
+    </div>
+    
+    <script>
+        function handler(id){
+            document.getElementById("title"+id).setAttribute("hidden",true)
+            document.getElementById("edit"+id).setAttribute("hidden",true)
+            document.getElementById("done"+id).removeAttribute("hidden")
+            document.getElementById("input"+id).removeAttribute("hidden")
+        }
+    </script>
+    <footer>
+        <h3>Bhavya Thakral © <%= new Date().getFullYear()%> </h3>
+    </footer>
+</body>
+</html>
